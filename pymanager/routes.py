@@ -4,7 +4,9 @@ from flask import render_template, redirect, url_for, flash
 
 @app.route('/')
 def index():
-    return '<h1>Hello World!</h1>'
+    
+    # Render dashboard if user is logged in
+    return render_template('dashboard.html')
 
 
 @app.route('/login')
