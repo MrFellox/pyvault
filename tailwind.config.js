@@ -1,6 +1,6 @@
 module.exports = {
   content: [
-    "./pymanager/templates/**/*.html",
+    "./pyvault/templates/**/*.html",
   ],
   theme: {
     extend: {

@@ -1,4 +1,4 @@
-from pymanager import app
+from pyvault import app
 import os
 
 if __name__ == '__main__':
