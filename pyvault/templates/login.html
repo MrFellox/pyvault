@@ -7,34 +7,40 @@ Login
 <div class="container text-white">
     <h1 class='text-center font-bold text-5xl mt-4'>Login</h1>
 
-    <div class="text-center my-8 bg-white border border-black shadow-lg mx-64 rounded-sm">
+    <div class="grid place-items-center">
 
-        <form method='POST'>
-            {{ form.hidden_tag() }}
+        <div class="text-center my-8 bg-white border border-black shadow-lg w-4/5 rounded-sm">
 
-            <div class="my-4">
+            <form method='POST'>
+                {{ form.hidden_tag() }}
 
-                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Email Address</label>
-                <br>
-                {{ form.email(
-                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
-                focus:outline-none shadow',
-                placeholder = 'Email Address',
-                autocomplete = "off"
-                )}}
-            </div>
+                <div class="my-4">
 
-            <div class='my-4'>
-                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Master Password</label>
+                    <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Email Address</label>
+                    <br>
+                    {{ form.email(
+                    class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
+                    focus:outline-none shadow',
+                    placeholder = 'Email Address',
+                    autocomplete = "off"
+                    )}}
+                </div>
 
-                {{ form.email(
-                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
-                focus:outline-none shadow',
-                placeholder = 'Email Address',
-                autocomplete = "off"
-                )}}
-            </div>
-        </form>
+                <div class='my-4'>
+                    <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Master Password</label>
+                    <br>
+                    {{ form.email(
+                    class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
+                    focus:outline-none shadow',
+                    placeholder = 'Email Address',
+                    autocomplete = "off"
+                    )}}
+                </div>
+
+                {{ form.submit(class = 'my-4 text-black font-bold px-4 py-2 bg-yellow-400 rounded shadow-md
+                hover:shadow-yellow-500 duration-200') }}
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
