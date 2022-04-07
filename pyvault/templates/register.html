@@ -84,6 +84,8 @@ PyVault - Register
                 {{ form.submit(class = 'my-4 text-black font-bold w-4/5 px-4 py-2 bg-yellow-400 rounded shadow-md
                 hover:shadow-yellow-500 duration-200') }}
             </form>
+            <p class='text-black '>Already have an account?</p>
+            <a class='italic text-sky-600 mb-4' href='{{ url_for("login") }}'>Log in.</a>
         </div>
     </div>
     {% endblock %}
