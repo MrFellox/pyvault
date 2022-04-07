@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "guest_layout.html" %}
 {% block title %}
 Login
 {% endblock %}
@@ -7,18 +7,35 @@ Login
 <div class="container text-white">
     <h1 class='text-center font-bold text-5xl mt-4'>Login</h1>
 
-    <form method='POST'>
-        {{ form.hidden_tag() }}
 
-        <div class="my-8 text-center">
-            {{ form.email.label(class = 'text-white font-bold antialiased text-xl') }}
-            <br>
-            <span class='font-mono my-4 text-red-500 italic'>Emails must be valid.</span>
-            <br>
-            {{ form.email }}
-        </div>
-        <div class="my-2"></div>
-        <div class="my-2"></div>
-    </form>
+    <div class="text-center my-8 bg-white border border-black shadow-lg mx-64 rounded-sm">
+
+        <form method='POST'>
+            {{ form.hidden_tag() }}
+
+            <div class="my-4">
+
+                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Email Address</label>
+                <br>
+                {{ form.email(
+                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
+                focus:outline-none shadow',
+                placeholder = 'Email Address',
+                autocomplete = "off"
+                )}}
+            </div>
+
+            <div class='my-4'>
+                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Master Password</label>
+
+                {{ form.email(
+                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
+                focus:outline-none shadow',
+                placeholder = 'Email Address',
+                autocomplete = "off"
+                )}}
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

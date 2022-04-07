@@ -3,6 +3,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from pyvault.models import Users, Passwords
 from pyvault.forms import LoginForm, RegisterForm
+from uuid import uuid4
 
 # Login
 
@@ -41,12 +42,20 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
+        
+        # Generate a unique UUID for the user
+        
+        user_id = uuid4().hex
+
         user = Users(
+            id = user_id,
             email=form.email.data, 
             password=form.password.data, 
             first_name=form.first_name.data, 
             last_name=form.last_name.data
         )
+
+        print('ID GENERATED:', user_id)
 
         db.session.add(user)
         db.session.commit()
