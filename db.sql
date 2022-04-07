@@ -3,7 +3,7 @@ CREATE TABLE users(
     last_name TEXT NOT NULL,
     email TEXT NOT NULL,
     password TEXT NOT NULL,
-    id INTEGER PRIMARY KEY AUTOINCREMENT
+    id TEXT PRIMARY KEY
 );
 
 CREATE TABLE passwords (
@@ -17,5 +17,5 @@ CREATE TABLE passwords (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-.save "pyvault.db"
+.save "./pyvault/pyvault.db"
 .exit
