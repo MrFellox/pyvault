@@ -1,0 +1,23 @@
+{
+  "name": "pyvault",
+  "version": "1.0.0",
+  "description": "Webpage to manage your passwords",
+  "main": "tailwind.config.js",
+  "dependencies": {
+    "tailwindcss": "^3.0.23"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrfellox/pyvault.git"
+  },
+  "author": "MrFellox",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrfellox/pyvault/issues"
+  },
+  "homepage": "https://github.com/mrfellox/pyvault#readme"
+}
