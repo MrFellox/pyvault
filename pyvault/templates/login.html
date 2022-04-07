@@ -7,6 +7,7 @@ Login
 <div class="container text-white">
     <h1 class='text-center font-bold text-5xl mt-4'>Login</h1>
 
+<<<<<<< HEAD
     <div class="grid place-items-center">
 
         <div class="text-center my-8 bg-white border border-black shadow-lg w-4/5 rounded-sm">
@@ -45,6 +46,36 @@ Login
             <p class='text-black '>Don't have an account?</p>
             <a class='italic text-sky-600 mb-4' href='{{ url_for("register") }}'>Sign up.</a>
         </div>
+=======
+    <div class="text-center my-8 bg-white border border-black shadow-lg mx-64 rounded-sm">
+
+        <form method='POST'>
+            {{ form.hidden_tag() }}
+
+            <div class="my-4">
+
+                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Email Address</label>
+                <br>
+                {{ form.email(
+                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
+                focus:outline-none shadow',
+                placeholder = 'Email Address',
+                autocomplete = "off"
+                )}}
+            </div>
+
+            <div class='my-4'>
+                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Master Password</label>
+
+                {{ form.email(
+                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
+                focus:outline-none shadow',
+                placeholder = 'Email Address',
+                autocomplete = "off"
+                )}}
+            </div>
+        </form>
+>>>>>>> 2ff2a1b143874fd8e86e912fcd5a1931da5cb11d
     </div>
 </div>
 {% endblock %}
