@@ -1,4 +1,4 @@
-from pyvault import app, login_manager, db
+from pyvault import app, login_manager, db, bcrypt
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from pyvault.models import Users, Passwords
@@ -27,9 +27,8 @@ def login():
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
 
-        if user and user.password == form.password.data:
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-
             return redirect(url_for('index'))
         
         else:
@@ -42,25 +41,35 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        
+        user = Users.query.filter_by(email=form.email.data).first()
+
+        if user:
+            flash('That email is already registered.', category='error')	
+            print('Email is already registerd ============')
+            return redirect(url_for('register'))
+
         # Generate a unique UUID for the user
         
         user_id = uuid4().hex
 
+
+        # Encrypt user's password
+
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')	
+
         user = Users(
             id = user_id,
             email=form.email.data, 
-            password=form.password.data, 
+            password=hashed_password, 
             first_name=form.first_name.data, 
             last_name=form.last_name.data
         )
 
-        print('ID GENERATED:', user_id)
 
         db.session.add(user)
         db.session.commit()
 
-        flash('Cuenta creada exitosamente, inicia sesión.')
+        flash('Account created successully! Please log in.')
         return redirect(url_for('login'))
 
     return render_template('register.html', form=form)
