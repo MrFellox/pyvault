@@ -33,5 +33,5 @@ $ python app.py
 **IN CASE OF BAD STYLING, TRY TO UPDATE TAILWIND CSS**
 
 ```cmd
-$ tailwindcss -i ./pyvault/static/styles.css -o ./pyvault/static/css/main.css
+$ npx tailwindcss -i ./pyvault/static/styles.css -o ./pyvault/static/css/main.css
 ```
