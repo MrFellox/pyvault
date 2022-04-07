@@ -8,75 +8,84 @@ PyVault - Register
 
     <h1 class='text-center font-bold text-5xl mt-4'>Register</h1>
 
-    <div class="text-center my-8 bg-white border border-black shadow-lg mx-64 rounded-sm">
+    <div class="grid place-items-center">
 
-        <form method='POST'>
-            {{ form.hidden_tag() }}
+        <div class="text-center my-8 bg-white border border-black shadow-lg w-4/5 rounded-sm">
 
-            <div class="my-5">
+            <form method='POST'>
+                {{ form.hidden_tag() }}
 
-                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>First Name</label>
-                <br>
-                {{ form.first_name(
-                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
-                focus:outline-none shadow',
-                placeholder = 'First Name',
-                autocomplete = "off"
-                )}}
-            </div>
+                <div class="my-5">
 
-            <div class="my-5">
+                    <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>First Name</label>
+                    <br>
+                    {{ form.first_name(
+                    class = 'bg-gray-100 placeholder-gray-600/75 w-4/5 text-xs text-black subpixel-antialiased rounded
+                    border
+                    focus:outline-none shadow',
+                    placeholder = 'First Name',
+                    autocomplete = "off"
+                    )}}
+                </div>
 
-                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Last Name</label>
-                <br>
-                {{ form.last_name(
-                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
-                focus:outline-none shadow',
-                placeholder = 'Last Name',
-                autocomplete = "off"
-                )}}
-            </div>
+                <div class="my-5">
 
-            <div class="my-5">
+                    <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Last Name</label>
+                    <br>
+                    {{ form.last_name(
+                    class = 'bg-gray-100 placeholder-gray-600/75 w-4/5 text-xs text-black subpixel-antialiased rounded
+                    border
+                    focus:outline-none shadow',
+                    placeholder = 'Last Name',
+                    autocomplete = "off"
+                    )}}
+                </div>
 
-                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Email Address</label>
-                <br>
-                {{ form.email(
-                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
-                focus:outline-none shadow',
-                placeholder = 'Email Address',
-                autocomplete = "off"
-                )}}
-            </div>
+                <div class="my-5">
 
-            <div class='my-5'>
-                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Master Password</label>
-                <br>
+                    <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Email Address</label>
+                    <br>
+                    {{ form.email(
+                    class = 'bg-gray-100 placeholder-gray-600/75 w-4/5 text-xs text-black subpixel-antialiased rounded
+                    border
+                    focus:outline-none shadow',
+                    placeholder = 'Email Address',
+                    autocomplete = "off"
+                    )}}
+                </div>
 
-                {{ form.password(
-                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
-                focus:outline-none shadow',
-                placeholder = 'Master Password',
-                autocomplete = "off"
-                )}}
-            </div>
+                <div class='my-5'>
+                    <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Master Password</label>
+                    <br>
 
-            <div class="my-5">
+                    {{ form.password(
+                    class = 'bg-gray-100 placeholder-gray-600/75 text-xs w-4/5 text-black subpixel-antialiased rounded
+                    border
+                    focus:outline-none shadow',
+                    placeholder = 'Master Password',
+                    autocomplete = "off"
+                    )}}
+                </div>
 
-                <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Confirm Master
-                    Password</label>
-                <br>
-                {{ form.confirm(
-                class = 'bg-gray-100 placeholder-gray-600/75 text-xs text-black subpixel-antialiased rounded border
-                focus:outline-none shadow',
-                placeholder = 'Confirm Master Password',
-                autocomplete = "off"
-                )}}
-            </div>
+                <div class="my-5">
 
-            {{ form.submit(class = 'my-4 text-black font-bold px-4 py-2 bg-yellow-400 rounded shadow-md
-            hover:shadow-yellow-500 duration-200') }}
-        </form>
+                    <label class='text-slate-800 font-bold text-md mb-6 subpixel-antialiased'>Confirm Master
+                        Password</label>
+                    <br>
+                    {{ form.confirm(
+                    class = 'bg-gray-100 placeholder-gray-600/75 w-4/5 text-xs text-black subpixel-antialiased rounded
+                    border
+                    focus:outline-none shadow',
+                    placeholder = 'Confirm Master Password',
+                    autocomplete = "off"
+                    )}}
+                </div>
+
+                {{ form.submit(class = 'my-4 text-black font-bold w-4/5 px-4 py-2 bg-yellow-400 rounded shadow-md
+                hover:shadow-yellow-500 duration-200') }}
+            </form>
+            <p class='text-black '>Already have an account?</p>
+            <a class='italic text-sky-600 mb-4' href='{{ url_for("login") }}'>Log in.</a>
+        </div>
     </div>
-
     {% endblock %}

@@ -5,7 +5,8 @@ Home
 {% block content %}
 <div class="container mt-6 ml-3">
 
-    <h1 class='text-3xl font-bold'>Welcome back, name</h1>
+    <h1 class='text-3xl font-bold'>Welcome back, {{ user.first_name }} {{user.last_name }}</h1>
+    <p>{{ user.id }}</p>
 
     <h4 class='mt-6'>Passwords</h4>
 

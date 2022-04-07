@@ -7,20 +7,23 @@ from uuid import uuid4
 
 # Login
 
+
 @login_manager.user_loader
 def load_user(user_id):
-    return Users.query.get(int(user_id))
+    return Users.query.get(user_id)
+
 
 @app.route('/')
 def index():
-    
+
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
 
     # Render dashboard if user is logged in
-    return render_template('dashboard.html', user = current_user)
+    return render_template('dashboard.html', user=current_user)
 
-@app.route('/login', methods = ['GET', 'POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
 
@@ -30,11 +33,12 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for('index'))
-        
+
         else:
             flash('Invalid email or password.')
 
-    return render_template('login.html', form = form)
+    return render_template('login.html', form=form)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -44,27 +48,26 @@ def register():
         user = Users.query.filter_by(email=form.email.data).first()
 
         if user:
-            flash('That email is already registered.', category='error')	
+            flash('That email is already registered.', category='error')
             print('Email is already registerd ============')
             return redirect(url_for('register'))
 
         # Generate a unique UUID for the user
-        
-        user_id = uuid4().hex
 
+        user_id = uuid4().hex
 
         # Encrypt user's password
 
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')	
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
 
         user = Users(
-            id = user_id,
-            email=form.email.data, 
-            password=hashed_password, 
-            first_name=form.first_name.data, 
+            id=user_id,
+            email=form.email.data,
+            password=hashed_password,
+            first_name=form.first_name.data,
             last_name=form.last_name.data
         )
-
 
         db.session.add(user)
         db.session.commit()
@@ -73,3 +76,9 @@ def register():
         return redirect(url_for('login'))
 
     return render_template('register.html', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
