@@ -7,7 +7,7 @@ Login
 <div class="container text-white">
     <h1 class='text-center font-bold text-5xl mt-4'>Login</h1>
 
-    <<<<<<< HEAD <div class="text-center my-8 bg-white border border-black shadow-lg mx-64 rounded-sm">
+    <div class="text-center my-8 bg-white border border-black shadow-lg mx-64 rounded-sm">
 
         <form method='POST'>
             {{ form.hidden_tag() }}
@@ -35,21 +35,6 @@ Login
                 )}}
             </div>
         </form>
-</div>
-=======
-<form method='POST'>
-    {{ form.hidden_tag() }}
-
-    <div class="my-8 text-center">
-        {{ form.email.label(class = 'text-white font-bold antialiased text-xl') }}
-        <br>
-        <span class='font-mono my-4 text-red-500 italic'>Emails must be valid.</span>
-        <br>
-        {{ form.email }}
     </div>
-    <div class="my-2"></div>
-    <div class="my-2"></div>
-</form>
->>>>>>> 9340d3d97c56a687f4bcb87ddfcd844ac66d37ce
 </div>
 {% endblock %}
