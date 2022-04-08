@@ -1,7 +1,7 @@
 from pyvault import app, login_manager, db, bcrypt
-from flask import render_template, redirect, url_for, flash
-from flask_login import current_user, login_user, logout_user, login_required
-from pyvault.models import Users, Passwords
+from flask import render_template, redirect, url_for, flash, jsonify
+from flask_login import current_user, login_user, logout_user
+# from pyvault.models import Users, Passwords
 from pyvault.forms import LoginForm, RegisterForm
 from uuid import uuid4
 
@@ -45,6 +45,10 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
+
+        # Query email from firestore
+
+        user = db.collection('users').where('email', '==', form.email.data).get()
         user = Users.query.filter_by(email=form.email.data).first()
 
         if user:
@@ -82,3 +86,16 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+@app.route('/firestore')
+def firestore():
+
+    doc_ref = db.collection('users').document('jfernandohernandez28@gmail.com').get()
+
+    if doc_ref.exists:
+        print('found')
+
+    else:
+        print('not found')
+
+    return 'Hello world'
