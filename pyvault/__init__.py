@@ -9,7 +9,6 @@ from firebase_admin import firestore
 
 # Get data from .env file
 load_dotenv()
-print('Secret key found: ' + os.getenv('SECRET_KEY'))
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///pyvault.db'

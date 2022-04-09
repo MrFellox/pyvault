@@ -3,6 +3,29 @@
 Home
 {% endblock %}
 {% block content %}
+
+<!-- Run to get passwords -->
+<script defer>
+
+    $SCRIPT_ROOT = {{ request.script_root | tojson }};
+
+    $(function () {
+        $.ajax({
+            url: $SCRIPT_ROOT + '/get_passwords/{{ current_user.id }}',
+            type: 'GET',
+            success: function (data) {
+                if (data == '404') {
+                    $('#passwords').html('We could not find any passwords for you. Report this if you think this is an error.');
+                }
+
+                else {
+                    $('#passwords').html(data);
+                }
+            }
+        });
+    });
+</script>
+
 <div class="container mt-6 ml-3">
 
     <h1 class='text-3xl font-bold'>Welcome back, {{ user.first_name }} {{user.last_name }}</h1>
@@ -10,8 +33,8 @@ Home
 
     <h4 class='mt-6'>Passwords</h4>
 
-    <div class="container">
+    <div id='passwords' class="container"></div>
 
-    </div>
+    <script src='{{ url_for("static", filename = "js/dashboard.js") }}' defer></script>
 </div>
 {% endblock %}
