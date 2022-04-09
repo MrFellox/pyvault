@@ -60,11 +60,10 @@ def register():
 
         # Query email from firestore
 
-        user = db.collection('users').document(form.email.data).get()
+        user = db.collection('users').where('email', '==', form.email.data).get()
 
-        if user.exists:
-            flash('That email is already registered.', category='error')
-            print('Email is already registerd ============')
+        if len(user) > 0:
+            flash('That email address is already registered.', 'error')
             return redirect(url_for('register'))
 
         # Generate a unique UUID for the user
@@ -86,7 +85,7 @@ def register():
 
         # Add user to firestore
 
-        db.collection('users').document(user.email).set(user.to_dict())
+        db.collection('users').document(user.id).set(user.to_dict())
 
         flash('Account created successully! Please log in.')
         return redirect(url_for('login'))
