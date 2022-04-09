@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn {
+        @apply text-black font-bold px-4 py-2 bg-yellow-400 rounded shadow-md duration-200
+    }
+
+    .btn:hover {
+        @apply shadow-yellow-500
+    }
+
+    .btn-danger {
+        @apply text-white font-bold px-4 py-2 bg-red-600 rounded shadow-md duration-200
+    }
+
+    .btn-danger:hover {
+        @apply shadow-red-600
+    }
+}
