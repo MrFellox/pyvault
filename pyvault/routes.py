@@ -1,8 +1,8 @@
 from pyvault import app, login_manager, db, bcrypt
 from flask import render_template, redirect, url_for, flash, jsonify
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_required, login_user, logout_user
 from pyvault.models import User, Password
-from pyvault.forms import LoginForm, RegisterForm
+from pyvault.forms import AddPasswordForm, LoginForm, RegisterForm
 from uuid import uuid4
 
 # Login
@@ -18,6 +18,11 @@ def load_user(user_id):
     user = user[0].to_dict()
     return User.from_dict(user)
 
+def unauthorized():
+    return redirect(url_for('index'))
+
+login_manager.unauthorized_handler(unauthorized)
+
 @app.route('/')
 def index():
 
@@ -29,15 +34,18 @@ def index():
     passwords = db.collection('passwords').where('user_id', '==', current_user.id).get()
 
     password_objects = []
-    for password in passwords:
+    for password in passwords:        
         password_objects.append(Password.from_dict(password.to_dict()))
 
     # Render dashboard if user is logged in
-    return render_template('dashboard.html', user=current_user)
+    return render_template('dashboard.html', user=current_user, passwords = password_objects)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
     form = LoginForm()
 
     if form.validate_on_submit():
@@ -74,6 +82,9 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+
+    if current_user.is_authenticated:
+        return redirect('/')
 
     if form.validate_on_submit():
 
@@ -113,20 +124,41 @@ def register():
 
 
 @app.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route('/firestore')
-def firestore():
+@app.route('/add_password', methods = ['GET', 'POST'])
+def add_password():
+    form = AddPasswordForm()
 
-    doc_ref = db.collection('passwords').get()
+    if form.validate_on_submit():
+            
+            # Generate a unique UUID for the password
+    
+            password_id = uuid4().hex
+    
+            # Encrypt password
 
-    if len(doc_ref) != 0:
-        print('found')
+            password = Password(
+                id = password_id,
+                service_name = form.service_name.data,
+                service_email = form.service_email.data,
+                password = form.service_password.data,
+                user_id = current_user.id
+                )
+    
+            # Add password to firestore
+    
+            db.collection('passwords').document(password.id).set(password.to_dict())
+    
+            flash('Password added successully!')
+            return redirect(url_for('index'))
 
-    else:
-        db.collection('passwords').add({"test": "test"})
-        print('not found')
+    return render_template('add_password.html', form = form)
 
-    return 'Hello world'
+@app.route('/delete_password/<password_id>', methods = ['GET', 'POST'])
+def delete_password(password_id):
+    db.collection('passwords').document(password_id).delete()
+    return redirect(url_for('index'))

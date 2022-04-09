@@ -37,7 +37,7 @@ class User(UserMixin):
 
 
 class Password():
-    def __init__(self, user_id:str, id:str, service_name:str, service_email:str, password:str, notes:str):
+    def __init__(self, user_id:str, id:str, service_name:str, service_email:str, password:str):
         """
         Creates a Passwords object.
         """
@@ -53,8 +53,8 @@ class Password():
             id=source['id'],
             user_id = source['user_id'],
             service_name = source['service_name'],
-            service_email=source['email'],
-            password=source['password'],
+            service_email=source['service_email'],
+            password=source['service_password'],
         )
 
     def to_dict(self):
@@ -63,7 +63,7 @@ class Password():
             'user_id': self.user_id,
             'service_name': self.service_name,
             'service_email': self.service_email,
-            'password': self.password,
+            'service_password': self.password,
         }
 
     def __repr__(self):

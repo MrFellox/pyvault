@@ -17,3 +17,8 @@ class RegisterForm(FlaskForm):
     last_name = StringField('Last Name', validators=[DataRequired(), Length(min=2, max=120)])
 
     submit = SubmitField('Register')
+
+class AddPasswordForm(FlaskForm):
+    service_name = StringField('Service Name', validators=[DataRequired(), Length(min=2, max=120)])
+    service_email = StringField('Service Email', validators=[DataRequired(), Length(min=2, max=120)])
+    service_password = PasswordField('Password', validators = [DataRequired(), Length(min=2, max=120)])

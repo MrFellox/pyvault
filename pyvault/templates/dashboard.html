@@ -35,27 +35,33 @@ Home
     </script>
     <div id='passwords' class="mt-4 ml-2 grid grid-cols-3 gap-4">
 
+        {% for password in passwords %}
         <div class="w-fit p-2 pr-4 rounded overflow-hidden drop-shadow-lg bg-white">
 
             <div class="ml-4 my-4">
 
                 <div class="text-gray-900">
-                    <h1 class="font-black text-xl">Steam</h1>
+                    <h1 class="font-black text-xl">{{ password.service_name}}</h1>
 
                     <p class='mt-4 text-gray-900 font-semibold'>Email Address</p>
-                    <p class='text-sm italics'>jfernandohernandez28@gmail.com</p>
+                    <p class='text-sm italics'>{{ password.service_email}}</p>
                     <br>
                     <p class='mt-4 text-gray-900 font-semibold'>Password</p>
-                    <input id='password-1'
+                    <input id='{{ password.id }}'
                         class='mt-2 border-none bg-transparent text-gray-900 text-sm italics overflow-hidden blur-sm indent-none'
-                        value='Bebes2827' readonly>
+                        value='{{ password.password }}' readonly>
 
-                    <button class='btn p-1 text-sm' onclick=showPassword(this) id='password-1' data-hidden=true>Show
+                    <button class='btn p-1 text-sm' onclick=showPassword(this) id='{{ password.id }}'
+                        data-hidden=true>Show
                         Password</button>
+
+                    <button class='btn-danger mt-8'><a
+                            href="{{ url_for('delete_password', password_id = password.id) }}">Delete
+                            Password</a></button>
                 </div>
             </div>
-
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
