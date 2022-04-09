@@ -1,7 +1,7 @@
 from pyvault import app, login_manager, db, bcrypt
 from flask import render_template, redirect, url_for, flash, jsonify
 from flask_login import current_user, login_user, logout_user
-# from pyvault.models import Users, Passwords
+from pyvault.models import User
 from pyvault.forms import LoginForm, RegisterForm
 from uuid import uuid4
 
@@ -10,8 +10,14 @@ from uuid import uuid4
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Users.query.get(user_id)
 
+    user = db.collection('users').where('id', '==', user_id).get()
+
+    if len(user) == 0:
+        return None
+
+    user = user[0].to_dict()
+    return User.from_dict(user)
 
 @app.route('/')
 def index():
@@ -28,14 +34,21 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        user = Users.query.filter_by(email=form.email.data).first()
+        user = db.collection('users').where('email', '==', form.email.data).get()
 
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        if len(user) == 0:
+            flash('That email address is not registered.', 'error')
+            return redirect(url_for('login'))
+
+        user = User.from_dict(user[0].to_dict())
+
+
+        if bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for('index'))
 
         else:
-            flash('Invalid email or password.')
+            flash('Incorrect password.', 'error')
 
     return render_template('login.html', form=form)
 
@@ -48,10 +61,9 @@ def register():
 
         # Query email from firestore
 
-        user = db.collection('users').where('email', '==', form.email.data).get()
-        user = Users.query.filter_by(email=form.email.data).first()
+        user = db.collection('users').document(form.email.data).get()
 
-        if user:
+        if user.exists:
             flash('That email is already registered.', category='error')
             print('Email is already registerd ============')
             return redirect(url_for('register'))
@@ -65,16 +77,17 @@ def register():
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
 
-        user = Users(
-            id=user_id,
-            email=form.email.data,
-            password=hashed_password,
+        user = User(
+            id = user_id,
+            email = form.email.data,
+            password = hashed_password,
             first_name=form.first_name.data,
             last_name=form.last_name.data
-        )
+            )
 
-        db.session.add(user)
-        db.session.commit()
+        # Add user to firestore
+
+        db.collection('users').document(user.email).set(user.to_dict())
 
         flash('Account created successully! Please log in.')
         return redirect(url_for('login'))

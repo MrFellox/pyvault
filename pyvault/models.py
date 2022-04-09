@@ -3,8 +3,11 @@ from pyvault import db
 from flask_login import UserMixin
 
 
-class Users(UserMixin):
+class User(UserMixin):
     def __init__(self, id, email, password, first_name, last_name):
+        """
+        Creates a User object.
+        """
         self.id = id
         self.email = email
         self.password = password
@@ -13,7 +16,7 @@ class Users(UserMixin):
 
     @staticmethod
     def from_dict(source):
-        return Users(
+        return User(
             id=source['id'],
             email=source['email'],
             password=source['password'],
@@ -35,12 +38,12 @@ class Users(UserMixin):
 
 
 
-class Passwords(db.Model):
-    user_id = db.Column(db.Integer, db.ForeignKey(
-        'users.id'), primary_key=True)
-    id = db.Column(db.Integer, primary_key=True)
-    service_name = db.Column(db.String(120))
-    service_username = db.Column(db.String(120))
-    service_email = db.Column(db.String(120))
-    password = db.Column(db.String(120))
-    notes = db.Column(db.String(150))
+# class Passwords(db.Model):
+#     user_id = db.Column(db.Integer, db.ForeignKey(
+#         'users.id'), primary_key=True)
+#     id = db.Column(db.Integer, primary_key=True)
+#     service_name = db.Column(db.String(120))
+#     service_username = db.Column(db.String(120))
+#     service_email = db.Column(db.String(120))
+#     password = db.Column(db.String(120))
+#     notes = db.Column(db.String(150))
