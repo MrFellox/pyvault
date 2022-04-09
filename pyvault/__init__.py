@@ -23,5 +23,6 @@ db = firestore.client(app = firebase_app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.session_protection = "strong"
 
 from pyvault.routes import *

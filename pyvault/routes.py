@@ -7,7 +7,6 @@ from uuid import uuid4
 
 # Login
 
-
 @login_manager.user_loader
 def load_user(user_id):
 
@@ -44,7 +43,7 @@ def login():
 
 
         if bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user)
+            login_user(user, remember=False)
             return redirect(url_for('index'))
 
         else:
