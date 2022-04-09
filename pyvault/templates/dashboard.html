@@ -4,37 +4,58 @@ Home
 {% endblock %}
 {% block content %}
 
-<!-- Run to get passwords -->
-<script defer>
-
-    $SCRIPT_ROOT = {{ request.script_root | tojson }};
-
-    $(function () {
-        $.ajax({
-            url: $SCRIPT_ROOT + '/get_passwords/{{ current_user.id }}',
-            type: 'GET',
-            success: function (data) {
-                if (data == '404') {
-                    $('#passwords').html('We could not find any passwords for you. Report this if you think this is an error.');
-                }
-
-                else {
-                    $('#passwords').html(data);
-                }
-            }
-        });
-    });
-</script>
-
 <div class="container mt-6 ml-3">
 
-    <h1 class='text-3xl font-bold'>Welcome back, {{ user.first_name }} {{user.last_name }}</h1>
-    <p>{{ user.id }}</p>
+    <h1 class='text-5xl ml-2 font-extrabold subpixel-antialiased'>Welcome back,</h1>
+    <h1 class='text-2xl ml-2 font-bold subpixel-antialiased'>{{ user.first_name }} {{ user.last_name }}</h1>
 
-    <h4 class='mt-6'>Passwords</h4>
+    <hr class='mx-12 my-6'>
+    <h4 class='text-2xl ml-2 subpixel-antialiased'>Passwords</h4>
 
-    <div id='passwords' class="container"></div>
+    <script>
+        function showPassword(button) {
+            // Get the id of the button
 
-    <script src='{{ url_for("static", filename = "js/dashboard.js") }}' defer></script>
+            let id = button.id
+
+            // Get the password field
+
+            let password = document.getElementById(String(id))
+
+            if (button.dataset.hidden == 'true') {
+                password.classList.remove('blur-sm')
+                button.dataset.hidden = 'false'
+            }
+
+            else {
+                password.classList.add('blur-sm')
+                button.dataset.hidden = 'true'
+            }
+        }
+    </script>
+    <div id='passwords' class="mt-4 ml-2 grid grid-cols-3 gap-4">
+
+        <div class="w-fit p-2 pr-4 rounded overflow-hidden drop-shadow-lg bg-white">
+
+            <div class="ml-4 my-4">
+
+                <div class="text-gray-900">
+                    <h1 class="font-black text-xl">Steam</h1>
+
+                    <p class='mt-4 text-gray-900 font-semibold'>Email Address</p>
+                    <p class='text-sm italics'>jfernandohernandez28@gmail.com</p>
+                    <br>
+                    <p class='mt-4 text-gray-900 font-semibold'>Password</p>
+                    <input id='password-1'
+                        class='mt-2 border-none bg-transparent text-gray-900 text-sm italics overflow-hidden blur-sm indent-none'
+                        value='Bebes2827' readonly>
+
+                    <button class='btn p-1 text-sm' onclick=showPassword(this) id='password-1' data-hidden=true>Show
+                        Password</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 {% endblock %}
