@@ -1,7 +1,7 @@
 from pyvault import app, login_manager, db, bcrypt
 from flask import render_template, redirect, url_for, flash, jsonify
 from flask_login import current_user, login_user, logout_user
-from pyvault.models import User
+from pyvault.models import User, Password
 from pyvault.forms import LoginForm, RegisterForm
 from uuid import uuid4
 
@@ -24,6 +24,14 @@ def index():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
 
+
+    # Get user passwords
+    passwords = db.collection('passwords').where('user_id', '==', current_user.id).get()
+
+    password_objects = []
+    for password in passwords:
+        password_objects.append(Password.from_dict(password.to_dict()))
+
     # Render dashboard if user is logged in
     return render_template('dashboard.html', user=current_user)
 
@@ -33,6 +41,17 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
+
+        # Check that collection exists
+
+        col_ref = db.collection('users').get()
+
+        if len(col_ref) == 0:
+            flash('That email address is not registered.', 'error')
+            return redirect(url_for('login'))
+
+        # Collection exists, keep going
+
         user = db.collection('users').where('email', '==', form.email.data).get()
 
         if len(user) == 0:
@@ -101,12 +120,13 @@ def logout():
 @app.route('/firestore')
 def firestore():
 
-    doc_ref = db.collection('users').document('jfernandohernandez28@gmail.com').get()
+    doc_ref = db.collection('passwords').get()
 
-    if doc_ref.exists:
+    if len(doc_ref) != 0:
         print('found')
 
     else:
+        db.collection('passwords').add({"test": "test"})
         print('not found')
 
     return 'Hello world'

@@ -1,5 +1,3 @@
-import email
-from pyvault import db
 from flask_login import UserMixin
 
 
@@ -38,12 +36,35 @@ class User(UserMixin):
 
 
 
-# class Passwords(db.Model):
-#     user_id = db.Column(db.Integer, db.ForeignKey(
-#         'users.id'), primary_key=True)
-#     id = db.Column(db.Integer, primary_key=True)
-#     service_name = db.Column(db.String(120))
-#     service_username = db.Column(db.String(120))
-#     service_email = db.Column(db.String(120))
-#     password = db.Column(db.String(120))
-#     notes = db.Column(db.String(150))
+class Password():
+    def __init__(self, user_id:str, id:str, service_name:str, service_email:str, password:str, notes:str):
+        """
+        Creates a Passwords object.
+        """
+        self.user_id = user_id
+        self.id = id
+        self.service_name = service_name
+        self.service_email = service_email
+        self.password = password
+
+    @staticmethod
+    def from_dict(source):
+        return Password(
+            id=source['id'],
+            user_id = source['user_id'],
+            service_name = source['service_name'],
+            service_email=source['email'],
+            password=source['password'],
+        )
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'service_name': self.service_name,
+            'service_email': self.service_email,
+            'password': self.password,
+        }
+
+    def __repr__(self):
+        return f'Password(id={self.id}, user_id={self.user_id}, service_name={self.service_name}, service_email={self.service_email}, password={self.password})'
